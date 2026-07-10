@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kakinada Kloud Kitchen (KKK)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+        .marquee { white-space: nowrap; overflow: hidden; }
+        .marquee-content { display: inline-block; animation: marquee 15s linear infinite; }
+        @keyframes marquee { 0% { transform: translate3d(100%, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+    </style>
+</head>
+<body class="bg-orange-50 text-gray-800 min-h-screen flex flex-col">
+
+    <div class="bg-amber-600 text-white py-1.5 overflow-hidden font-medium text-sm sm:text-base shadow-sm">
+        <div class="marquee w-full">
+            <div class="marquee-content flex gap-8">
+                <span>✨ Hygiene Homemade •  పరిశుభ్రమైన ఇంటి వంట ✨</span>
+                <span>✨ అమ్మమ్మ చేతి వంట (Ammamma Chethi Vanta) ✨</span>
+                <span>✨ Pure Traditional Homemade   Sweets Delivered Fresh ✨</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center cursor-pointer" onclick="showPage('home')">
+                    <div class="bg-amber-500 text-white p-2 rounded-full mr-2">
+                        <i class="fa-solid fa-utensils text-xl"></i>
+                    </div>
+                    <span class="text-xl sm:text-2xl font-bold text-amber-700 tracking-wide">KKK</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-6 items-center font-medium">
+                    <button onclick="showPage('home')" class="hover:text-amber-600 transition">Home</button>
+                    <button onclick="showPage('my-orders')" class="hover:text-amber-600 transition">My Orders</button>
+                    <button onclick="showPage('track-order')" class="hover:text-amber-600 transition">Track Order</button>
+                    <button onclick="showPage('profile')" class="hover:text-amber-600 transition"><i class="fa-regular fa-user mr-1"></i> Profile</button>
+                    <button onclick="showPage('login')" class="hover:text-amber-600 transition">Login</button>
+                    <button onclick="showPage('cart')" class="relative bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition flex items-center">
+                        <i class="fa-solid fa-cart-shopping mr-2"></i> Cart
+                        <span id="cart-count" class="ml-1 bg-white text-amber-600 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+
+                <div class="md:hidden flex items-center gap-4">
+                    <button onclick="showPage('cart')" class="relative text-amber-700 p-2">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        <span id="cart-count-mobile" class="absolute top-0 right-0 bg-amber-600 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="text-gray-700 focus:outline-none">
+                        <i id="menu-icon" class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-4 space-y-3 font-medium shadow-inner">
+            <button onclick="showPage('home')" class="block w-full text-left py-2 hover:text-amber-600">Home</button>
+            <button onclick="showPage('my-orders')" class="block w-full text-left py-2 hover:text-amber-600">My Orders</button>
+            <button onclick="showPage('track-order')" class="block w-full text-left py-2 hover:text-amber-600">Track Order</button>
+            <button onclick="showPage('profile')" class="block w-full text-left py-2 hover:text-amber-600">Profile</button>
+            <button onclick="showPage('login')" class="block w-full text-left py-2 hover:text-amber-600">Login</button>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div id="page-home" class="page-view space-y-10">
+            <div class="text-center max-w-2xl mx-auto space-y-3">
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-amber-800">Kakinada Kloud Kitchen</h1>
+                <p class="text-xl font-bold text-amber-600 tracking-wide">అమ్మమ్మ చేతి వంట</p>
+                <p class="text-gray-600 sm:text-lg">Authentic, premium, traditional homemade Andhra sweets crafted with love and pristine hygiene.</p>
+            </div>
+
+            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+        </div>
+
+        <div id="page-login" class="page-view hidden max-w-md mx-auto bg-white p-8 rounded-2xl shadow-md mt-10">
+            <h2 class="text-2xl font-bold text-center text-gray-950 mb-6">Welcome to KKK</h2>
+            <form onsubmit="event.preventDefault(); alert('Login simulated successfully!'); showPage('home');" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" required class="w-full border border-gray-300 px-4 py-2 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" required class="w-full border border-gray-300 px-4 py-2 rounded-xl focus:ring-2 focus:ring-amber-500 outline-none">
+                </div>
+                <button type="submit" class="w-full bg-amber-500 text-white py-2.5 rounded-xl font-semibold hover:bg-amber-600 transition mt-2">Sign In</button>
+            </form>
+        </div>
+
+        <div id="page-profile" class="page-view hidden max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-md">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900 border-b pb-3">My Profile</h2>
+            <div class="space-y-4">
+                <div class="flex items-center gap-4 pb-4 border-b border-gray-100">
+                    <div class="h-16 w-16 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center text-2xl font-bold">U</div>
+                    <div>
+                        <h4 class="text-xl font-semibold">Your Name</h4>
+                        <p class="text-sm text-gray-500">📍Kakinada,Andhra Pradesh.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div>
+                        <span class="text-xs text-gray-400 block font-medium uppercase tracking-wider">Email</span>
+                        <span class="text-gray-800 font-medium">yourname@gmail.com</span>
+                    </div>
+                    <div>
+                        <span class="text-xs text-gray-400 block font-medium uppercase tracking-wider">Phone</span>
+                        <span class="text-gray-800 font-medium">+91 12345 67890</span>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <span class="text-xs text-gray-400 block font-medium uppercase tracking-wider">Primary Delivery Address</span>
+                        <span class="text-gray-800 font-medium">1-23-45, Main Road, Subhash Nagar, Kakinada, Andhra Pradesh - 533001</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-cart" class="page-view hidden max-w-3xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-md">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900 flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-amber-600"></i> Your Sweet Cart</h2>
+            <div id="cart-container" class="space-y-4">
+                </div>
+            
+            <div id="cart-summary" class="mt-8 border-t pt-6 space-y-4 hidden">
+                <div class="flex justify-between items-center text-lg font-bold text-gray-900">
+                    <span>Total Amount:</span>
+                    <span id="cart-total-amount">₹0</span>
+                </div>
+                
+                <div class="bg-orange-50 p-4 rounded-xl space-y-3 border border-orange-100">
+                    <h4 class="font-bold text-amber-900"><i class="fa-solid fa-credit-card mr-1"></i> Payment Method</h4>
+                    <div class="space-y-2 text-sm sm:text-base">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="radio" name="payment" value="UPI" checked class="text-amber-600 focus:ring-amber-500">
+                            <span>UPI (GPay / PhonePe / Paytm)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="radio" name="payment" value="COD" class="text-amber-600 focus:ring-amber-500">
+                            <span>Cash on Delivery (COD)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button onclick="processCheckout()" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-xl font-bold text-lg transition shadow-md">
+                    Place Order & Send Confirmation
+                </button>
+            </div>
+        </div>
+
+        <div id="page-track-order" class="page-view hidden max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-md">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">Track Order</h2>
+            <div id="tracking-status" class="space-y-6">
+                <div class="text-center py-8 text-gray-400">
+                    <i class="fa-solid fa-map-location-dot text-5xl mb-3"></i>
+                    <p>No active shipments to track right now.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-my-orders" class="page-view hidden max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-md">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">Order History</h2>
+            <div id="orders-history-container" class="space-y-4">
+                <p class="text-gray-500 text-center py-6">You haven't ordered any delicious sweets yet!</p>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-zinc-900 text-zinc-400 text-sm py-6 mt-12 border-t border-zinc-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p class="text-white font-semibold">Kakinada Kloud Kitchen (KKK) &copy; 2026</p>
+            <p class="text-xs">Hygiene Homemade • Pure Traditional Ingredients</p>
+        </div>
+    </footer>
+
+    <script>
+        const CONFIG_RECEIVING_EMAIL = "your-email@example.com"; 
+
+        const menuItems = [
+            { id: 1, name: "Coconut Laddu", telugu: "కొబ్బరి లడ్డు", price: 450, weight: "1 kg", img: "kobbari-laddu.jpg" },
+            { id: 2, name: "Ragi Laddu", telugu: "రాగి లడ్డు", price: 300, weight: "1 kg", img: "ragi-laddu.jpg" },
+            { id: 3, name: "Sesame Laddu", telugu: "నువ్వుల లడ్డు", price: 600, weight: "1 kg", img: "nuvvula-laddu.jpg" },
+            { id: 4, name: "Ravva Laddu", telugu: "రవ్వ లడ్డు", price: 350, weight: "1 kg", img: "ravva-laddu.jpg" },
+            { id: 5, name: "Dry Fruit Laddu", telugu: "డ్రై ఫ్రూట్ లడ్డు", price: 800, weight: "1 kg", img: "dry-fruit-laddu.jpg" },
+            { id: 6, name: "Peanut Laddu", telugu: "పల్లి లడ్డు", price: 300, weight: "1 kg", img: "palli-laddu.jpg" },
+            { id: 7, name: "Millet Laddu", telugu: "చిరుధాన్యాల లడ్డు", price: 400, weight: "1 kg", img: "chiru-danyalu-laddu.jpg" },
+            { id: 8, name: "Janthikalu", telugu: "మురుకులు", price: 500, weight: "1 kg", img: "murukulu.jpg" },
+            { id: 9, name: "Rose Cookies", telugu: "చల్లా గుత్తులు", price: 500, weight: "1 kg", img: "challa-gutthulu.jpg" },
+            { id: 10, name: "Kajjikayalu", telugu: "కజ్జికాయలు", price: 650, weight: "1 kg", img: "kajjikayalu.jpg" }
+        ];
+
+        let cart = [];
+        let orderHistory = [];
+        let currentTrackingOrder = null;
+
+        // Render Home Products Grid (Fixed overlay text issue)
+        function renderMenu() {
+            const grid = document.getElementById('menu-grid');
+            grid.innerHTML = menuItems.map(item => {
+                const cartItem = cart.find(c => c.name === item.name);
+                return `
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition flex flex-col">
+                    <div class="h-52 bg-amber-100/50 relative flex items-center justify-center text-amber-800/60 font-medium overflow-hidden">
+                        <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover z-10 relative" onload="this.nextElementSibling.style.display='none'" onerror="this.style.display='none'">
+                        <span class="absolute text-xs px-4 text-center text-amber-800/60"><i class="fa-regular fa-image text-lg block mb-1"></i> [Place image file named "${item.img}" here]</span>
+                    </div>
+                    <div class="p-5 flex flex-col flex-grow justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-1 gap-2">
+                                <h3 class="text-lg font-bold text-gray-900">${item.name} <span class="text-amber-700 block text-sm font-medium">(${item.telugu})</span></h3>
+                                ${item.name === 'Rose Cookies' ? '<span class="bg-red-100 text-red-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase shrink-0 flex items-center gap-1"><i class="fa-solid fa-circle text-[6px]"></i> Non-Veg</span>' : '<span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase shrink-0 flex items-center gap-1"><i class="fa-solid fa-circle text-[6px]"></i> Veg</span>'}
+                            </div>
+                            <p class="text-xs text-gray-500 mb-4">Weight Unit: ${item.weight}</p>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-gray-50">
+                            <span class="text-xl font-bold text-amber-700">₹${item.price}</span>
+                            ${!cartItem ? `<button onclick="addToCart('${item.name}', ${item.price}, '${item.weight}')" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Add to Cart</button>` : `<div class="flex items-center border border-amber-500 rounded-lg bg-white overflow-hidden"><button onclick="updateQuantityFromMenu('${item.name}', -1)" class="px-2.5 py-1 bg-amber-100 hover:bg-amber-200 font-bold transition text-amber-700">−</button><span class="px-3 font-semibold text-gray-800 text-sm">${cartItem.quantity}</span><button onclick="updateQuantityFromMenu('${item.name}', 1)" class="px-2.5 py-1 bg-amber-100 hover:bg-amber-200 font-bold transition text-amber-700">+</button></div>`}
+                        </div>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page-view').forEach(p => p.classList.add('hidden'));
+            document.getElementById(`page-${pageId}`).classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            
+            document.getElementById('mobile-menu').classList.add('hidden');
+            document.getElementById('menu-icon').className = "fa-solid fa-bars text-2xl";
+
+            if(pageId === 'cart') renderCart();
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if(menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.className = "fa-solid fa-xmark text-2xl";
+            } else {
+                menu.classList.add('hidden');
+                icon.className = "fa-solid fa-bars text-2xl";
+            }
+        }
+
+        function updateCartBadges() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').innerText = totalItems;
+            document.getElementById('cart-count-mobile').innerText = totalItems;
+        }
+
+        function addToCart(name, price, weight) {
+            const existing = cart.find(item => item.name === name);
+            if(existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ name, price, weight, quantity: 1 });
+            }
+            updateCartBadges();
+            renderMenu();
+            showNotification(`✓ ${name} added to cart!`);
+        }
+
+        function updateQuantityFromMenu(name, change) {
+            const item = cart.find(i => i.name === name);
+            if(item) {
+                item.quantity += change;
+                if(item.quantity <= 0) {
+                    cart = cart.filter(i => i.name !== name);
+                }
+                renderMenu();
+                updateCartBadges();
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg font-semibold animate-pulse z-50';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 2000);
+        }
+
+        function updateQuantity(name, change) {
+            const item = cart.find(i => i.name === name);
+            if(item) {
+                item.quantity += change;
+                if(item.quantity <= 0) {
+                    cart = cart.filter(i => i.name !== name);
+                }
+                renderCart();
+                renderMenu();
+                updateCartBadges();
+            }
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-container');
+            const summary = document.getElementById('cart-summary');
+            
+            if(cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="fa-solid fa-basket-shopping text-5xl mb-3"></i>
+                        <p class="text-lg font-medium">Your cart is empty</p>
+                        <button onclick="showPage('home')" class="mt-4 text-sm text-amber-600 font-semibold underline">Browse Sweets</button>
+                    </div>`;
+                summary.classList.add('hidden');
+                return;
+            }
+
+            summary.classList.remove('hidden');
+            let html = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                html += `
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 p-4 rounded-xl border border-gray-100 gap-4">
+                        <div>
+                            <h4 class="font-bold text-gray-900 text-lg">${item.name}</h4>
+                            <p class="text-sm text-gray-500">Weight: ${item.weight} | Price: ₹${item.price}</p>
+                        </div>
+                        <div class="flex items-center justify-between w-full sm:w-auto gap-6">
+                            <div class="flex items-center border border-gray-300 rounded-lg bg-white overflow-hidden">
+                                <button onclick="updateQuantity('${item.name}', -1)" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 font-bold transition text-gray-600">-</button>
+                                <span class="px-4 font-semibold text-gray-800">${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.name}', 1)" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 font-bold transition text-gray-600">+</button>
+                            </div>
+                            <span class="font-bold text-amber-700 text-lg min-w-[70px] text-right">₹${subtotal}</span>
+                        </div>
+                    </div>`;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('cart-total-amount').innerText = '₹' + total;
+        }
+
+        function processCheckout() {
+            const paymentMode = document.querySelector('input[name="payment"]:checked').value;
+            const orderId = 'KKK-' + Math.floor(100000 + Math.random() * 900000);
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            let itemsSummary = cart.map(i => `${i.name} (${i.weight}) x${i.quantity} - ₹${i.price * i.quantity}`).join('\n');
+            
+            const emailSubject = encodeURIComponent(`KKK Sweet Order Received! ID: ${orderId}`);
+            const emailBody = encodeURIComponent(
+                `Kakinada Kloud Kitchen Order Details:\n` +
+                `----------------------------------------\n` +
+                `Order ID: ${orderId}\n` +
+                `Payment Status: Pending (${paymentMode})\n\n` +
+                `Items Ordered:\n${itemsSummary}\n\n` +
+                `Total Value: ₹${total}\n` +
+                `----------------------------------------\n` +
+                `Thank you for buying hygiene homemade sweets!`
+            );
+
+            const freshOrder = {
+                id: orderId,
+                date: new Date().toLocaleDateString(),
+                total: total,
+                items: [...cart],
+                payment: paymentMode,
+                status: 'Preparing Order'
+            };
+
+            orderHistory.unshift(freshOrder);
+            currentTrackingOrder = freshOrder;
+            
+            renderHistory();
+            renderTracking();
+
+            window.location.href = `mailto:${CONFIG_RECEIVING_EMAIL}?subject=${emailSubject}&body=${emailBody}`;
+
+            cart = [];
+            updateCartBadges();
+            
+            alert(`Order Placed Successfully!\nOrder ID: ${orderId}\nOpening email app for linked notification route.`);
+            showPage('track-order');
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('orders-history-container');
+            if (orderHistory.length === 0) return;
+
+            container.innerHTML = orderHistory.map(order => `
+                <div class="border border-gray-200 rounded-xl p-5 space-y-3 bg-white hover:border-amber-300 transition">
+                    <div class="flex justify-between items-center flex-wrap gap-2 border-b pb-2">
+                        <div>
+                            <span class="text-sm font-semibold text-gray-500">Order ID:</span>
+                            <span class="font-bold text-gray-900">${order.id}</span>
+                        </div>
+                        <span class="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full font-bold">${order.status}</span>
+                    </div>
+                    <div class="text-sm text-gray-600 space-y-1">
+                        <p><span class="font-medium">Date:</span> ${order.date}</p>
+                        <p><span class="font-medium">Payment Mode:</span> ${order.payment}</p>
+                        <p><span class="font-medium">Sweets:</span> ${order.items.map(i => `${i.name} (x${i.quantity})`).join(', ')}</p>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 font-bold text-gray-900">
+                        <span>Total Paid</span>
+                        <span class="text-amber-700 text-lg">₹${order.total}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTracking() {
+            const container = document.getElementById('tracking-status');
+            if (!currentTrackingOrder) return;
+
+            container.innerHTML = `
+                <div class="bg-orange-50 border border-orange-200 p-4 rounded-xl mb-6">
+                    <p class="text-sm text-gray-600 font-medium">Tracking Active Order:</p>
+                    <h3 class="text-lg font-bold text-amber-900">${currentTrackingOrder.id}</h3>
+                </div>
+                <div class="relative pl-8 space-y-8 before:content-[''] before:absolute before:left-3.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-amber-200">
+                    <div class="relative flex items-start gap-4">
+                        <div class="absolute -left-[25px] bg-amber-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs"><i class="fa-solid fa-check"></i></div>
+                        <div>
+                            <h4 class="font-bold text-amber-900">Order Placed</h4>
+                            <p class="text-sm text-gray-500">Email confirmation request sent out.</p>
+                        </div>
+                    </div>
+                    <div class="relative flex items-start gap-4">
+                        <div class="absolute -left-[25px] bg-amber-400 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs animate-ping"></div>
+                        <div class="absolute -left-[25px] bg-amber-500 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs"><i class="fa-solid fa-fire-burner"></i></div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Kitchen Preparing</h4>
+                            <p class="text-sm text-gray-500">Ammamma is packing your fresh homemade sweets.</p>
+                        </div>
+                    </div>
+                    <div class="relative flex items-start gap-4 opacity-50">
+                        <div class="absolute -left-[25px] bg-gray-300 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs"><i class="fa-solid fa-truck"></i></div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Out for Delivery</h4>
+                            <p class="text-sm text-gray-500">Fresh sweets heading directly to your doorstep location.</p>
+                        </div>
+                    </div>
+                    <div class="relative flex items-start gap-4 opacity-50">
+                        <div class="absolute -left-[25px] bg-gray-300 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs"><i class="fa-solid fa-check"></i></div>
+                        <div>
+                            <h4 class="font-bold text-gray-900">Delivered</h4>
+                            <p class="text-sm text-gray-500">Your delicious homemade sweets have been delivered successfully!</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        renderMenu();
+    </script>
+</body>
+</html>
